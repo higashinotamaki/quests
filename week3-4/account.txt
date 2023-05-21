@@ -1,4 +1,3 @@
-aa:bb:cc
-dd:ee:ff
-gg:hh:ii
-dd:tt:nn
+aaa:bbb:ccc
+aaa:nnn:fff
+ddd:fff:ggg
