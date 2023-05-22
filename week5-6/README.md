@@ -1,7 +1,6 @@
 # インターネットTV
 
-
-## テーブル設計
+## テーブル設計一覧
 
 テーブル設計は以下の通りです。
 
@@ -65,31 +64,77 @@
 |episode_id|INT|||||
 
 
-## ステップ2
+## テーブルの作成とダミーデータの登録
 
-実際にテーブルを構築し、データを入れましょう。その手順をドキュメントとしてまとめてください（アウトプットは手順のドキュメントです）。
+テーブルの作成とダミーデータ登録は、下記の通り行ってください。
+※「create_table.sql」と「insert.sql」は当該レポジトリよりgit clone で取得する等してください。
 
-具体的には、以下のことを行う手順のドキュメントを作成してください。
+① 自身のPCでMysqlにログインする
+② create_table.sql を実行してテーブルを作成する
+例えば、Documents下のsqlディレクトリにcreate_table.sqlを格納している場合は、
+```
+source /Users/ユーザー名/Documents/sql/create_table.sql;
+```
+のように実行する
+③ insert.sql を実行してダミーデータを登録する
+上の②と同様、
+```
+source /Users/ユーザー名/Documents/sql/insert_table.sql;
+```
+のように実行する
+※ご自身でダミーデータを登録していただいても構いません。
 
-1. データベースを構築します
-2. ステップ1で設計したテーブルを構築します
-3. サンプルデータを入れます。サンプルデータはご自身で作成ください（ChatGPTを利用すると比較的簡単に生成できます）
+## クエリの実行
 
-手順のドキュメントは、他の人が見た時にその手順通りに実施すればテーブル作成及びサンプルデータ格納が行えるように記載してください。
+下記の通り、下記の課題を実現するためクエリを記載します。
+なお、こちらは当該レポジトリにあるselect.sqlの中身そのままです。
+そのため、git clone してお手元のPCで実行していただいても問題ありません。
 
-なお、ステップ2は以下のことを狙っています。
+1.よく見られているエピソードを知りたいです。エピソード視聴数トップ3のエピソードタイトルと視聴数を取得してください
+```
+SELECT title, view_count
+FROM episodes
+ORDER BY view_count DESC
+LIMIT 3;
+```
+2.よく見られているエピソードの番組情報やシーズン情報も合わせて知りたいです。
+  エピソード視聴数トップ3の番組タイトル、シーズン数、エピソード数、エピソードタイトル、視聴数を取得してください
+```
+SELECT pr.title, se.season_number, ep.episode_number, ep.title, ep.description, ep.view_count
+FROM episodes AS ep INNER JOIN seasons AS se
+ON  ep.season_id = se.season_id
+INNER JOIN programs AS pr
+ON se.program_id = pr.program_id
+ORDER BY ep.view_count DESC
+LIMIT 3;
+```
 
-- データを実際に入れることでステップ3でデータ抽出クエリを試せるようにすること
-- 手順をドキュメントにまとめることで、自身がやり直したい時にすぐやり直せること
-- 手順を人が同じように行えるようにまとめることで、ドキュメントコミュニケーション力を上げること
+3.本日の番組表を表示するために、本日、どのチャンネルの、何時から、何の番組が放送されるのかを知りたいです。
+  本日放送される全ての番組に対して、チャンネル名、放送開始時刻(日付+時間)、放送終了時刻、シーズン数、エピソード数、エピソードタイトル、エピソード詳細を取得してください。
+  なお、番組の開始時刻が本日のものを本日放送される番組とみなすものとします。
+```
+SELECT ch.name, sc.start_time, sc.end_time, se.season_number, ep.episode_number, ep.title, ep.description
+FROM schedules AS sc INNER JOIN channels AS ch
+ON sc.channel_id = ch.channel_id
+INNER JOIN episodes AS ep
+ON sc.episode_id = ep.episode_id
+INNER JOIN seasons AS se
+ON ep.season_id = se.season_id
+WHERE DATE(sc.start_time) = CURDATE()
+ORDER BY sc.start_time;
+```
 
-## ステップ3
-
-以下のデータを抽出するクエリを書いてください。
-
-1. よく見られているエピソードを知りたいです。エピソード視聴数トップ3のエピソードタイトルと視聴数を取得してください
-2. よく見られているエピソードの番組情報やシーズン情報も合わせて知りたいです。エピソード視聴数トップ3の番組タイトル、シーズン数、エピソード数、エピソードタイトル、視聴数を取得してください
-3. 本日の番組表を表示するために、本日、どのチャンネルの、何時から、何の番組が放送されるのかを知りたいです。本日放送される全ての番組に対して、チャンネル名、放送開始時刻(日付+時間)、放送終了時刻、シーズン数、エピソード数、エピソードタイトル、エピソード詳細を取得してください。なお、番組の開始時刻が本日のものを本日方法される番組とみなすものとします
-4. ドラマというチャンネルがあったとして、ドラマのチャンネルの番組表を表示するために、本日から一週間分、何日の何時から何の番組が放送されるのかを知りたいです。ドラマのチャンネルに対して、放送開始時刻、放送終了時刻、シーズン数、エピソード数、エピソードタイトル、エピソード詳細を本日から一週間分取得してください
-5. (advanced) 直近一週間で最も見られた番組が知りたいです。直近一週間に放送された番組の中で、エピソード視聴数合計トップ2の番組に対して、番組タイトル、視聴数を取得してください
-6. (advanced) ジャンルごとの番組の視聴数ランキングを知りたいです。番組の視聴数ランキングはエピソードの平均視聴数ランキングとします。ジャンルごとに視聴数トップの番組に対して、ジャンル名、番組タイトル、エピソード平均視聴数を取得してください。
+4.Channel 5というチャンネルがあったとして、Channel 5のチャンネルの番組表を表示するために、本日から一週間分、何日の何時から何の番組が放送されるのかを知りたいです。
+  Channel 5のチャンネルに対して、放送開始時刻、放送終了時刻、シーズン数、エピソード数、エピソードタイトル、エピソード詳細を本日から一週間分取得してください
+```
+SELECT ch.name, sc.start_time, sc.end_time, se.season_number, ep.episode_number, ep.title, ep.description
+FROM schedules AS sc
+INNER JOIN channels AS ch
+ON sc.channel_id = ch.channel_id
+INNER JOIN episodes AS ep
+ON sc.episode_id = ep.episode_id
+INNER JOIN seasons AS se
+ON ep.season_id = se.season_id
+WHERE sc.start_time BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 WEEK) AND ch.name = 'Channel 5'
+ORDER BY sc.start_time;
+```
