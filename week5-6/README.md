@@ -69,13 +69,13 @@
 テーブルの作成とダミーデータ登録は、下記の通り行ってください。<br>
 ※「create_table.sql」と「insert.sql」は当該レポジトリよりgit clone で取得する等してください。
 
-① 自身のPCでMysqlにログインする<br>
+① 自身のPCでMysqlにログインする<br><br>
 ② create_table.sql を実行してテーブルを作成する<br>
 例えば、Documents下のsqlディレクトリにcreate_table.sqlを格納している場合は、
 ```
 source /Users/ユーザー名/Documents/sql/create_table.sql;
 ```
-のように実行する<br>
+のように実行する<br><br>
 ③ insert.sql を実行してダミーデータを登録する<br>
 上の②と同様、
 ```
