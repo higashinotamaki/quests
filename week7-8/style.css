@@ -1,0 +1,216 @@
+.header_above {
+  padding: 12px 0px 12px 0px;
+  background-color: #9AA58F;
+  font-size: 16px;
+  color: white;
+}
+
+a {
+  color: #2F2725;
+  text-decoration: none;
+}
+
+.header_left {
+  font-size: 36px;
+  padding-left: 70px;
+}
+
+.header_center {
+  font-size: 14px;
+}
+
+.header_right {
+  padding-right: 40px;
+}
+
+.header_right a {
+  margin: 0px 20px;
+}
+
+.header_contents {
+  padding: 12px 0px;
+  background-color: #F7F6ED;
+}
+
+main {
+  background-color: #F7F6ED;
+  border-bottom: solid #e9e3e2;
+}
+
+.products {
+  margin-top: 40px;
+  padding-bottom: 120px;
+}
+
+.product_image div img {
+  margin-top: 80px;
+  max-width: 100%;
+  /* width: 300px;
+  height: 300px;
+  object-fit: cover; */
+}
+
+/* .product_image div {
+  /* padding: 10px; */
+/* } */
+
+.product_kana {
+  margin: 10px 0px;
+  font-size: 12px;
+}
+
+.product_en {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.product_price {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+footer>div {
+  padding: 60px 0px;
+  background-color: #F7F6ED;
+}
+
+.com_info_left {
+  padding-left: 60px;
+}
+
+.com_info_right div {
+  font-size: 12px;
+  padding: 7px 0px;
+}
+
+.header_contents {
+  color: black;
+}
+
+/* ---------------------- */
+
+.layer {
+  background: rgba(0, 0, 0, .2);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0;
+  /* visibility: hidden; */
+  transition: opacity 1s linear, visibility 1s linear, z-index 1s linear;
+}
+
+
+
+.layer.is-open {
+  z-index: 999;
+  opacity: 1;
+  visibility: visible;
+}
+
+.layer.is-open .smodal {
+  opacity: 1;
+  visibility: visible;
+}
+
+.smodal__button-wrap {
+  position: absolute;
+  right: 10px;
+  top: -28px;
+  display: inline-flex;
+}
+
+
+.close-button {
+  position: relative;
+  width: 39px;
+  height: 39px;
+  background: orange;
+  border-radius: 50%;
+  padding: 0;
+  border: transparent;
+  cursor: pointer;
+}
+
+.close-button span {
+  width: 25px;
+  height: 2px;
+  background: #fff;
+  display: inline-block;
+  position: absolute;
+  left: calc(50% - 12px);
+  top: 50%;
+  border-radius: 20px;
+}
+
+.close-button span:nth-child(1) {
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+.close-button span:nth-child(2) {
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+.smodal {
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  width: 80%;
+  min-width: 440px;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility .7s linear, opacity .7s linear;
+}
+
+
+.smodal__inner {
+  margin-top: 125px;
+  margin-bottom: 125px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  background: #fff;
+  box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 13px;
+  display: block;
+  padding: 21px 8px 21px;
+  height: auto;
+}
+
+.smodal__content {
+  padding-top: 15px;
+  padding-bottom: 23px;
+  display: flex;
+}
+
+
+.smodal__button-area {
+  max-width: 843px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 17px;
+  padding-top: 15px;
+}
+
+
+.button {
+  background: orange;
+  border-radius: 12px;
+  box-shadow: 2px 4px 6px 3px rgba(0, 0, 0, .24);
+  border: 1px solid orange;
+  font-size: 12px;
+  line-height: 1.6;
+  display: block;
+  padding: 6px 10px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  margin: 0;
+}
+
+.smodal__content>img {
+  max-width: 50%;
+  margin-right: 20px;
+}
